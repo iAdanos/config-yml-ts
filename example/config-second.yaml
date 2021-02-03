@@ -1,0 +1,11 @@
+#
+# Example: second config file in the bundle
+#
+---
+
+c:
+  d:
+  - three
+  - four
+  e: qq
+  f: ${sub1}

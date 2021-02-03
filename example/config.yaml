@@ -1,0 +1,61 @@
+#
+# Example: first config file in the bundle
+#
+
+---
+
+str1: test
+str2: "123"
+str3: str
+int1: 123
+
+sub1: my ${str1}
+sub2: my ${str2} ${int1}
+sub3: ${int1}
+sub4: my ${${str3}1} doube sub
+
+
+dict1:
+  a: foo
+  b: for ${str1}
+  c: for ${str2}
+  d: ${int1}
+  e: ${dict1.a}
+  f: 456
+
+arr1:
+- one
+- two
+- 234
+- ${str1}
+- ${str2}
+- ${str3}
+- ${dict1.b}
+- dict2:
+    one: ${str3}
+    two: ${sub4}
+
+arr2:
+  - four
+  - let
+
+sub5: ${arr2}
+
+dictsub1:
+  a: test
+  b: ${dict1}
+
+sub6: ${dictsub1.b.e}
+
+arrsub1:
+  - bolt
+  - ${dictsub1}
+  - ${arr2}
+  - ${test1}
+  - sub ${test1} sup
+  - ${str1}
+  - sub ${str2} sup
+
+test1: alex ${test2}
+
+y: ${c}
