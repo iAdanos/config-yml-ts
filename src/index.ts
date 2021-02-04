@@ -2,10 +2,6 @@ import * as fs from "fs";
 import * as yaml from "yaml";
 import * as lodash from "lodash";
 import merge from "ts-deepmerge";
-import { any, placeholder } from "lodash/fp";
-import { type } from "os";
-import { isNumber } from "lodash";
-
 
 /**
   * Yaml config class definition
@@ -55,16 +51,15 @@ export class yamlConfig {
     * @param message - string
     * @returns N/a
     */
-   log(message: string) {
+  log(message: string) {
     console.error('YAML-CONFIG: ', message)
   }
 
   /**
-    * Checks provided file extention and updated files data map
-    * @param sting: path
+    * Checks provided file extension and updated files data map
+    * @param file - path to the file or directory to read config(s) from
     */
-   readFile (file: string) {
-
+  readFile (file: string) {
     // If file has YAML extention
     if (file.endsWith('.yml') || file.endsWith('.yaml')) {
       this.log(`Reading ${file}`)
@@ -84,7 +79,6 @@ export class yamlConfig {
    * @returns N/a
    */
   readConfig () {
-
     // If path exists
     if (fs.existsSync(this.path)) {
       this.log(`Loading config from "${this.path}"`)
@@ -106,12 +100,12 @@ export class yamlConfig {
         })
       } else { // If it's a single file
         this.log(`Using single file mode to read config`)
-        // Read it dircetly
+        // Read it directly
         this.readFile(this.path)
       }
     } else {
       // Log path error
-      // TODO: Throw exeption to stop main program execution
+      // TODO: Throw exception to stop main program execution
       this.log (`${this.path} is not a path to an existent file or directory`)
     }
 
@@ -149,7 +143,6 @@ export class yamlConfig {
    * @returns {result: string | number | object, status: boolean}
    */
   substituteString (mainObject: any = this.config, stringToProcess: string) {
-
     let successFlag = false                    // Flag to indicate if substitution is successful
     let isNumberFlag = false                   // Flag to indicate that number was substituted
     const placeholderRegexp = /\${([\w.-]+)}/g // Regex to find placeholder like ${object.path}
@@ -197,13 +190,8 @@ export class yamlConfig {
 
       // If string still has placeholders (updated value also may contain placeholder)
       if (substitutedString.match(placeholderRegexp) && successFlag) {
-        // Initialize status for lower recursion levels
-        let recursedSubstitutedString = Object({
-          status: false
-        })
-
         // Preform substitution again for this string
-        recursedSubstitutedString = this.substituteString(mainObject, substitutedString)
+        let recursedSubstitutedString = this.substituteString(mainObject, substitutedString)
         // Update result and status with inner substitution's
         substitutedString = recursedSubstitutedString.result
       }
@@ -228,7 +216,6 @@ export class yamlConfig {
    * @param objectToProcess - Object to replace substitutions in
    */
   substitute (mainObject: any = this.config, objectToProcess: any = this.config) {
-
     this.log(`Processing substitions for ${objectToProcess} with ${mainObject} as values source`)
 
     // Process substitutions: String

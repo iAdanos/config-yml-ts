@@ -1,6 +1,6 @@
 {
   "name": "yaml-config-ts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Typescript library to get config from YAML file",
   "author": "Adanos Flamel",
   "license": "MIT",
@@ -48,5 +48,8 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
+  },
+  "directories": {
+    "example": "example"
   }
 }
